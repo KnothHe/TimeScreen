@@ -1,6 +1,6 @@
 # Time Screen
 
-A android app that displays time in full screen.(Old smart phone reuse.)
+An android app that displays the time in full screen.(Old smart phone reuse.)
 
 ## Screenshot
 
