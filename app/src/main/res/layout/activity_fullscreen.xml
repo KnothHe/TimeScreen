@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="@color/fullscreen_dark_background"
     android:keepScreenOn="true"
     android:orientation="vertical"
     android:theme="@android:style/Theme.NoTitleBar.Fullscreen"
@@ -18,9 +17,8 @@
         android:layout_gravity="center"
         android:gravity="center"
         android:text="@string/dummy_content"
-        android:textColor="@color/fullscreen_dark_text"
         android:textSize="90sp"
         android:textStyle="bold"
         app:fontFamily="monospace" />
 
-</FrameLayout>
+</LinearLayout>
