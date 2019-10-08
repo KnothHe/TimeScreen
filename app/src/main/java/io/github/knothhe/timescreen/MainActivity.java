@@ -19,8 +19,9 @@ import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private TextView mContentView;
     private final String USE_DARK_THEME = "USE_DARK_THEME";
+    private TextView mContentView;
+    private FontAwesome switchThemeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         mContentView = findViewById(R.id.fullscreen_content);
         mContentView.setOnClickListener(this);
+
+        switchThemeBtn = findViewById(R.id.switch_theme);
+        switchThemeBtn.setVisibility(View.INVISIBLE);
+        switchThemeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchTheme();
+                switchThemeBtn.setVisibility(View.INVISIBLE);
+            }
+        });
 
         // Start timer
         Timer timer = new Timer();
@@ -85,6 +96,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        int switchThemeBtnVisibility = switchThemeBtn.getVisibility();
+        if (switchThemeBtnVisibility == View.INVISIBLE) {
+            switchThemeBtn.setVisibility(View.VISIBLE);
+        } else {
+            switchThemeBtn.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    private void switchTheme() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         boolean useDarkTheme = preferences.getBoolean(USE_DARK_THEME, true);
         SharedPreferences.Editor editor = preferences.edit();
