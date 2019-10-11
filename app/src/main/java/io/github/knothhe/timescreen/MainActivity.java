@@ -5,14 +5,17 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
+import android.widget.SeekBar;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 import java.util.TimeZone;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -22,6 +25,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private final String USE_DARK_THEME = "USE_DARK_THEME";
     private TextView mContentView;
     private FontAwesome switchThemeBtn;
+    private FontAwesome fontSizeBtn;
+    private SeekBar fontSizeBar;
+    private List<FontAwesome> configBtns;
+    private boolean configBtnsVisibility = false;
+    private int maxFontSize = 90;
+    private int minFontSize = 10;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,18 +42,51 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fullscreen);
 
+        configBtns = new ArrayList<>();
+
         mContentView = findViewById(R.id.fullscreen_content);
         mContentView.setOnClickListener(this);
+        mContentView.setTextSize(maxFontSize);
 
         switchThemeBtn = findViewById(R.id.switch_theme);
-        switchThemeBtn.setVisibility(View.INVISIBLE);
         switchThemeBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 switchTheme();
-                switchThemeBtn.setVisibility(View.INVISIBLE);
+                hideConfigBtns();
             }
         });
+        configBtns.add(switchThemeBtn);
+
+        fontSizeBtn = findViewById(R.id.font_size);
+        fontSizeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fontSizeBar.setVisibility(View.VISIBLE);
+            }
+        });
+        configBtns.add(fontSizeBtn);
+
+        fontSizeBar = findViewById(R.id.font_size_bar);
+        fontSizeBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                int fontSize = (int) ((progress + 10) / 100.0 * maxFontSize);
+                mContentView.setTextSize(fontSize);
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
+        hideConfigBtns();
 
         // Start timer
         Timer timer = new Timer();
@@ -96,12 +138,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
-        int switchThemeBtnVisibility = switchThemeBtn.getVisibility();
-        if (switchThemeBtnVisibility == View.INVISIBLE) {
-            switchThemeBtn.setVisibility(View.VISIBLE);
+        if (configBtnsVisibility) {
+            hideConfigBtns();
         } else {
-            switchThemeBtn.setVisibility(View.INVISIBLE);
+            showConfigBtns();
         }
+        configBtnsVisibility = !configBtnsVisibility;
     }
 
     private void switchTheme() {
@@ -117,6 +159,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         @SuppressLint("SimpleDateFormat") DateFormat format = new SimpleDateFormat("HH : mm : ss");
         format.setTimeZone(TimeZone.getDefault());
         return format.format(time.getTime());
+    }
+
+    private void setConfigBtnsVisibility(int visibility) {
+        for (FontAwesome btn : configBtns) {
+            btn.setVisibility(visibility);
+        }
+        fontSizeBar.setVisibility(View.INVISIBLE);
+    }
+
+    private void showConfigBtns() {
+        setConfigBtnsVisibility(View.VISIBLE);
+    }
+
+    private void hideConfigBtns() {
+        setConfigBtnsVisibility(View.INVISIBLE);
     }
 
 }

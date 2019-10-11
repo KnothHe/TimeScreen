@@ -9,7 +9,7 @@ An android app that displays the time in full screen.(Old smart phone reuse.)
 ## TODO
 
 - [ ] Add more themes(Already have light and dark theme)
-- [ ] Can change font size
+- [x] Can change font size
 - [ ] More beautiful UI
 - [ ] Performance tuning
 - [ ] Add an animated gradient effect

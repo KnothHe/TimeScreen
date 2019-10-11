@@ -3,4 +3,6 @@
     <string name="dummy_button">Dummy Button</string>
     <string name="dummy_content">12:34:56</string>
     <string name="fa_adjust">&#xf042;</string>
+    <string name="fa_circle">&#xf111;</string>
+    <string name="fa_font">&#xf031;</string>
 </resources>
